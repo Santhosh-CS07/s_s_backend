@@ -1,11 +1,42 @@
+// src/routes/userRoutes.ts
+
 import Router from 'koa-router';
-import UserController from '../controllers/userController';
+import { registerUser, getUsers, updateUser, deleteUser, getUserByMobileAndPassword } from '../controllers/userController';
 
 const router = new Router({
-    prefix: '/users'
+  prefix: '/v1/users' // Setting a prefix for all routes in this router
 });
 
-router.get('/getUser', UserController.getUser);
-router.post('/create', UserController.createUser);
+const routes = [
+  {
+    method: 'get',
+    path: '/',
+    handler: getUsers
+  },
+  {
+    method: 'post',
+    path: '/',
+    handler: registerUser
+  },
+  {
+    method: 'get',
+    path: '/find',
+    handler: getUserByMobileAndPassword
+  },
+  {
+    method: 'put',
+    path: '/:id',
+    handler: updateUser
+  },
+  {
+    method: 'delete',
+    path: '/:id',
+    handler: deleteUser
+  }
+];
+
+routes.forEach(route => {
+  (router as any)[route.method](route.path, route.handler);
+});
 
 export default router;

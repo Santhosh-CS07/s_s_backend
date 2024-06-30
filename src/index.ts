@@ -1,8 +1,8 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import userRoutes from './routes/userRoutes';
-import client from './models/db';
 import cors from '@koa/cors'; // Import the CORS middleware
+import connectDB from './config/db';
 
 const app = new Koa();
 
@@ -22,13 +22,10 @@ app.use(bodyParser());
 app.use(userRoutes.routes());
 app.use(userRoutes.allowedMethods());
 
+connectDB();
+
 const PORT = process.env.PORT || 3001;
 
-client.connect().then(() => {
-    console.log('Database connected');
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-}).catch((error) => {
-    console.log('Error connecting to the database', error);
-});
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
