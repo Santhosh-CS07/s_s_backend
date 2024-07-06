@@ -29,8 +29,8 @@ export const registerUser = async (ctx: Context) => {
     await user.save();
 
     ctx.status = 200;
-    ctx.body = { message: 'User registered successfully', status:1 };
-  } catch (err:any) {
+    ctx.body = { message: 'User registered successfully', status: 1 };
+  } catch (err: any) {
     console.error(err.message);
     ctx.status = 500;
     ctx.body = { error: 'Server error' };
@@ -51,16 +51,16 @@ export const getUserByMobileAndPassword = async (ctx: Context) => {
 
     if (!user) {
       ctx.status = 404;
-      ctx.body = { error: 'User not found' };
+      ctx.body = { error: 'User not found', status: 2 };
       return;
     }
 
     ctx.status = 200;
-    ctx.body = {data:user, status:1};
+    ctx.body = { data: user, status: 1 };
   } catch (err: any) {
     console.error(err.message);
     ctx.status = 500;
-    ctx.body = { error: 'Server error' };
+    ctx.body = { error: 'Server error', status: 3 };
   }
 };
 
@@ -69,7 +69,7 @@ export const getUsers = async (ctx: Context) => {
     const users = await User.find();
     ctx.status = 200;
     ctx.body = users;
-  } catch (err:any) {
+  } catch (err: any) {
     console.error(err.message);
     ctx.status = 500;
     ctx.body = { error: 'Server error' };
@@ -101,7 +101,7 @@ export const updateUser = async (ctx: Context) => {
 
     ctx.status = 200;
     ctx.body = { message: 'User updated successfully' };
-  } catch (err:any) {
+  } catch (err: any) {
     console.error(err.message);
     ctx.status = 500;
     ctx.body = { error: 'Server error' };
@@ -112,7 +112,7 @@ export const deleteUser = async (ctx: Context) => {
   const { id } = ctx.params as any;
 
   try {
-    const user:any = await User.findById(id);
+    const user: any = await User.findById(id);
 
     if (!user) {
       ctx.status = 404;
@@ -124,7 +124,7 @@ export const deleteUser = async (ctx: Context) => {
 
     ctx.status = 200;
     ctx.body = { message: 'User deleted successfully' };
-  } catch (err:any) {
+  } catch (err: any) {
     console.error(err.message);
     ctx.status = 500;
     ctx.body = { error: 'Server error' };
