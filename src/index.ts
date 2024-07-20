@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import userRoutes from './routes/userRoutes';
+import demoUserRoutes from './routes/demoUserRoutes';
 import cors from '@koa/cors'; // Import the CORS middleware
 import connectDB from './config/db';
 
@@ -21,6 +22,9 @@ app.use(async (ctx, next) => {
 app.use(bodyParser());
 app.use(userRoutes.routes());
 app.use(userRoutes.allowedMethods());
+
+app.use(demoUserRoutes.routes());
+app.use(demoUserRoutes.allowedMethods());
 
 connectDB();
 
